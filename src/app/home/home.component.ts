@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
     this.displayEditPopup = false;
   }
 
-  
+
   onConfirmAdd(product: Product): void {
     this.addProduct(product);
     this.displayAddPopup = false;
@@ -91,14 +91,15 @@ export class HomeComponent implements OnInit {
     console.error('Error loading products: ', response);
   }
 
-  private addProduct(product: Product): void {
-    this.productsService.addProduct(this.productsUrl, product).subscribe({
-      next: (data) => {
-        this.handleRequestSuccess(data, 'delete'), this.loadProducts(0, 5);
-      },
-      error: (error) => this.handleRequestError(error, 'error'),
-    });
-  }
+ private addProduct(product: Product): void {
+  this.productsService.addProduct(this.productsUrl, product).subscribe({
+    next: (data) => {
+      this.handleRequestSuccess(data, 'add');
+      this.loadProducts(0, 5);
+    },
+    error: (error) => this.handleRequestError(error, 'add'),
+  });
+}
 
   private editProduct(product: Product, id: number): void {
     this.productsService

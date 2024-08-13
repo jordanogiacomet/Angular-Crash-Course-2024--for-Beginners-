@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
 
   private addProduct(product: Product): void {
     this.productsService.addProduct(this.productsUrl, product).subscribe({
-      next: (data) => this.handleRequestSuccess(data, 'delete'),
+      next: (data) => { this.handleRequestSuccess(data, 'delete'), this.loadProducts(0, 5); },
       error: (error) => this.handleRequestError(error, 'error'),
     });
   }

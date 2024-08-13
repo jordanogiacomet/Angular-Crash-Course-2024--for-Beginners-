@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Options } from '../../types';
+import { Options, Product } from '../../types';
 
 // Vai ser usado para facilitar as chamadas;
 // Sabemos que precisamos fazer um get para /clothes
@@ -17,16 +17,23 @@ import { Options } from '../../types';
 // Portando criar uma interface;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
   // Sendo httpClient algo que estamos injetando, precisamos de um provider para a dependencia
   // Um provider e um set de instrucoes para a injecao de dependecias em como instanciar ou criar um servico
-  constructor(
-    private httpClient: HttpClient
-  ) { }
+  constructor(private httpClient: HttpClient) {}
 
   get<T>(url: string, options: Options): Observable<T> {
     return this.httpClient.get<T>(url, options) as Observable<T>;
+  }
+  post<T>(url: string, body: Product, options: Options): Observable<T> {
+    return this.httpClient.post<T>(url, body, options) as Observable<T>;
+  }
+  put<T>(url: string, body: Product, options: Options): Observable<T> {
+    return this.httpClient.put<T>(url, body, options) as Observable<T>;
+  }
+  delete<T>(url: string, options: Options): Observable<T> {
+    return this.httpClient.delete<T>(url, options) as Observable<T>;
   }
 }

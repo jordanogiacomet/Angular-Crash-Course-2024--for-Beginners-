@@ -5,20 +5,57 @@ import { ProductComponent } from '../components/product/product.component';
 import { CommonModule } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { requestStringConstructor } from './utils';
+import { EditPopupComponent } from '../components/edit-popup/edit-popup.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ProductComponent, CommonModule, PaginatorModule],
+  imports: [
+    ProductComponent,
+    CommonModule,
+    PaginatorModule,
+    EditPopupComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  constructor(private productsService: ProductsService) {}
+
   products: Product[] = [];
   private readonly productsUrl: string = 'http://localhost:3000/clothes';
   totalRecords: number = 0;
+  displayEditPopup: boolean = false;
+  displayAddPopup: boolean = false;
 
-  constructor(private productsService: ProductsService) {}
+  toggleEditPopup(product: Product): void {
+    this.selectedProduct  = product;
+    this.displayEditPopup = true;
+  }
+
+  toggleAddPopup(): void {
+    this.displayAddPopup = true;
+  }
+
+
+  selectedProduct: Product = {
+    id: 0,
+    name: '',
+    price: '',
+    rating: 0,
+    image: '',
+  };
+
+  onConfirmEdit(product: Product): void {
+    this.editProduct(product, this.selectedProduct.id ?? 0) ;
+    this.displayEditPopup = false;
+  }
+
+  
+  onConfirmAdd(product: Product): void {
+    this.addProduct(product);
+    this.displayAddPopup = false;
+  }
 
   onProductsOutput(product: Product): void {
     console.log(product);
@@ -56,7 +93,9 @@ export class HomeComponent implements OnInit {
 
   private addProduct(product: Product): void {
     this.productsService.addProduct(this.productsUrl, product).subscribe({
-      next: (data) => { this.handleRequestSuccess(data, 'delete'), this.loadProducts(0, 5); },
+      next: (data) => {
+        this.handleRequestSuccess(data, 'delete'), this.loadProducts(0, 5);
+      },
       error: (error) => this.handleRequestError(error, 'error'),
     });
   }

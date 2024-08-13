@@ -1,12 +1,39 @@
 <div class="column gap-1">
-    <div class="row wrap gap-1 space-between">
-        <app-product *ngFor="let product of products" [product]="product" (productOutput)="onProductsOutput(product)"></app-product>
-    </div>
+  <!-- Clicamos no toggle e ele abre a tela, mandando o true para a variavel de display dentro do edit popup -->
+  <button
+    type="button"
+    pButton
+    icon="pi pi-plus"
+    (click)="toggleAddPopup()"
+    label="Add Product"
+  ></button>
+  <div class="row wrap gap-1 space-between">
+    <app-product
+      *ngFor="let product of products"
+      [product]="product"
+      (productOutput)="onProductsOutput(product)"
+    ></app-product>
+  </div>
 
-    <p-paginator 
-    (onPageChange)="onPageChange($event)" 
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
     [first]="0"
-    [rows]="5" 
-    [totalRecords]="totalRecords" 
-    [rowsPerPageOptions]="[5, 10, 20]" />
+    [rows]="5"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[5, 10, 20]"
+  />
 </div>
+
+<app-edit-popup
+  [product]="selectedProduct"
+  [display]="displayEditPopup"
+  (confirm)="onConfirmEdit($event)"
+  header="Edit Product"
+></app-edit-popup>
+
+<!-- Clicamos no onConfirmAdd que gera o evento de mandar o formulario -->
+<app-edit-popup
+  [display]="displayAddPopup"
+  (confirm)="onConfirmAdd($event)"
+  header="Add Product"
+></app-edit-popup>

@@ -1,0 +1,11 @@
+<p-dialog
+  header="Delete"
+  [(visible)]="display"
+  [modal]="true"
+  [closable]="false">
+  
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" (click)="onConfirm()" label="Delete">Delete</button>
+    <button type="button" pButton icon="pi pi-times" (click)="onCancel()" label="Cancel">Cancel</button>
+  </p-footer>  
+</p-dialog>

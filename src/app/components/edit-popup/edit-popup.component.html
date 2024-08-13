@@ -11,7 +11,7 @@
       <span class="name-label">Name:</span>
       <input type="text" [(ngModel)]="product.name" />
     </div>
-    <div class="row gap-05">
+    <div class="row gap-1">
       <span class="price-label">Price:</span>
       <input type="text" [(ngModel)]="product.price" />
     </div>
@@ -31,13 +31,13 @@
       icon="pi pi-check"
       (click)="onConfirm()"
       label="Confirm"
-    ></button>
+    >Confirmar</button>
     <button
       type="button"
       pButton
       icon="pi pi-times"
       (click)="onCancel()"
       label="Cancel"
-    ></button>
+    >Cancelar</button>
   </p-footer>
 </p-dialog>

@@ -8,5 +8,27 @@
   </div>
   <!-- [(ngModel)] =  Emite valores e muda valores a partir de eventos -->
   <!-- Quando um evento muda os valores de p-rating isso ja e refletido nele automaticamente -->
-  <p-rating [readonly]="true" iconCancelClass="hidden" [(ngModel)]="product.rating" />
+  <p-rating
+    [readonly]="true"
+    iconCancelClass="hidden"
+    [(ngModel)]="product.rating"
+  />
+
+  <div class="row gap-05">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-pencil"
+      (click)="editProduct()"
+      label="Edit"
+    >Edit</button>
+    <button
+      type="button"
+      pButton
+      icon="pi pi-trash"
+      (click)="deleteProduct()"
+      label="Delete"
+      class="p-button-danger"
+      #deleteButton
+    >Delete</button>
 </div>

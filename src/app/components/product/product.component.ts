@@ -8,16 +8,25 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [RatingModule, FormsModule],
   templateUrl: './product.component.html',
-  styleUrl: './product.component.scss'
+  styleUrl: './product.component.scss',
 })
-export class ProductComponent implements OnInit{
-
+export class ProductComponent implements OnInit {
   ngOnInit() {
     this.productOutput.emit(this.product);
   }
   // Precisamos de um jeito de prover os produtos para esse componente;
   // Apareceu um erro no console que ngfor nao e um atributo de app-product, logo preciso incluir as dependencias necessarias;
-  @Input() product!: Product // -> Eu posso deixar a exclamacao porque eu sei que na montagem de produto, eu estou provendo um produto;
+  @Input() product!: Product; // -> Eu posso deixar a exclamacao porque eu sei que na montagem de produto, eu estou provendo um produto;
   // Isso emite valores para fora a partir de um evento
   @Output() productOutput: EventEmitter<Product> = new EventEmitter();
+  @Output() edit: EventEmitter<Product> = new EventEmitter<Product>();
+  @Output() delete: EventEmitter<Product> = new EventEmitter<Product>();
+
+  editProduct(): void {
+    this.edit.emit(this.product);
+  }
+
+  deleteProduct(): void {
+    this.delete.emit(this.product);
+  }
 }

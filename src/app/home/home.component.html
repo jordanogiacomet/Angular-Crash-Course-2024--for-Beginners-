@@ -6,12 +6,13 @@
     icon="pi pi-plus"
     (click)="toggleAddPopup()"
     label="Add Product"
-  ></button>
+  >Add</button>
   <div class="row wrap gap-1 space-between">
     <app-product
       *ngFor="let product of products"
       [product]="product"
-      (productOutput)="onProductsOutput(product)"
+      (edit)="toggleEditPopup(product)"
+      (delete)="toogleDeletePopup(product)"
     ></app-product>
   </div>
 
@@ -28,6 +29,7 @@
   [product]="selectedProduct"
   [display]="displayEditPopup"
   (confirm)="onConfirmEdit($event)"
+  (click)="onCancelEdit()"
   header="Edit Product"
 ></app-edit-popup>
 
@@ -37,3 +39,11 @@
   (confirm)="onConfirmAdd($event)"
   header="Add Product"
 ></app-edit-popup>
+
+<app-delete-popup
+  [product]="selectedProduct"
+  [display]="displayDeletePopup"
+  (confirm)="onConfirmDelete($event)"
+  (click)="onCancelDelete()"
+  header="Add Product"
+></app-delete-popup>

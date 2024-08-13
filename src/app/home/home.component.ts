@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { requestStringConstructor } from './utils';
 import { EditPopupComponent } from '../components/edit-popup/edit-popup.component';
+import { DeletePopupComponent } from "../components/delete-popup/delete-popup.component";
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ import { EditPopupComponent } from '../components/edit-popup/edit-popup.componen
     CommonModule,
     PaginatorModule,
     EditPopupComponent,
-  ],
+    DeletePopupComponent
+],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -27,6 +29,7 @@ export class HomeComponent implements OnInit {
   totalRecords: number = 0;
   displayEditPopup: boolean = false;
   displayAddPopup: boolean = false;
+  displayDeletePopup: boolean = false;
 
   toggleEditPopup(product: Product): void {
     this.selectedProduct  = product;
@@ -37,6 +40,18 @@ export class HomeComponent implements OnInit {
     this.displayAddPopup = true;
   }
 
+  onCancelEdit(): void {
+    this.displayEditPopup = false;
+  }
+
+  onCancelDelete(): void {
+    this.displayDeletePopup = false;
+  }
+
+  toogleDeletePopup(product: Product):void {
+    this.displayDeletePopup = true;
+  }
+  
 
   selectedProduct: Product = {
     id: 0,
@@ -51,6 +66,10 @@ export class HomeComponent implements OnInit {
     this.displayEditPopup = false;
   }
 
+  onConfirmDelete(product: Product): void {
+    this.deleteProduct(this.selectedProduct.id ?? 0)
+    this.displayDeletePopup = false;
+  }
 
   onConfirmAdd(product: Product): void {
     this.addProduct(product);
@@ -113,7 +132,7 @@ export class HomeComponent implements OnInit {
   private deleteProduct(id: number): void {
     this.productsService.deleteProduct(this.buildProductUrl(id)).subscribe({
       next: (data) => this.handleRequestSuccess(data, 'delete'),
-      error: (error) => this.handleRequestError(error, 'error'),
+      error: (error) => this.handleRequestError(error, 'load'),
     });
   }
 

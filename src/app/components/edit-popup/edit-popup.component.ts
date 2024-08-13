@@ -31,6 +31,5 @@ export class EditPopupComponent {
 
   onCancel(): void {
     this.display = false; // Fechar o popup ao cancelar
-    this.cancel.emit(); // Emitir evento de cancelamento, se necessário
   }
 }

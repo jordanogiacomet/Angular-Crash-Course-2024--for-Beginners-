@@ -1,0 +1,12 @@
+<div class="column gap-1 wrapper">
+  <img [src]="product.image" alt="Product tumbnail" />
+  <h2 class="title">{{ product.name }}</h2>
+
+  <div class="row gap-05">
+    <span class="price-label">Price: </span>
+    <span class="price">{{ product.price }}</span>
+  </div>
+  <!-- [(ngModel)] =  Emite valores e muda valores a partir de eventos -->
+  <!-- Quando um evento muda os valores de p-rating isso ja e refletido nele automaticamente -->
+  <p-rating [readonly]="true" iconCancelClass="hidden" [(ngModel)]="product.rating" />
+</div>

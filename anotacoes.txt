@@ -1,0 +1,44 @@
+O src folder contem o projeto em si;
+Tudo relacionando ao projeto;
+- Style.scss -> relacionado ao estilo global da aplicacao;
+Todo o estilo incluido nese arquivo e reusado no modulo ou aplicacao inteira;
+Eu quero apenas incluir ESTILOS GLOBAIS!;
+Todo o estilo customizado como tailwindo deve der aplicado no  styles.scss
+Eu nao vou escrever diretamente nele, eu vou incluir coisas nele;
+E realmente so colocar estilos globais;
+- main.ts -> O ponto inicial da aplicacao, bootstrapApplication cria uma instancia como ponto inicial de um componente standalone.
+appConfig contem a configuracao da inicializacao;
+E se algo acontecer eu mostro um erro;
+- appConfig.ts -> Contem a configuracao do aplicativo, nesse caso adiciona um provider de rotas;
+Rotas permitem carregar componentes ou modulos; como /home /dashboard/menu
+- app.routes.ts -> Onde especificamos nossas rotas, podemos ter diversas rotas;
+O app config consegue atribuir as configuracoes ao Componente que esta em processo de bootstrap;
+- index.html -> O html em si da aplicacao, onde no body contem <app-root></app-root>;
+Nome esse que e definido como selector no app.component.ts
+Componentes basicamente sao grupos de html, css e ts que trabalham juntos para formar um componente visual;
+- Pasta public, toda imagem sera carregada dela;
+- Pasta app -> Minha pasta principal da aplicacao;
+- Nela temos a colecao de 4 arquivos que compoem o componente principal;
+Normalmente cada componente tera sua propria pasta
+Um componente e qualquer combinacao de grupos ou um elemento sozinho que e composto por esses 4 arquivos;
+Ele foi criado separadamente para encapsular sua logica e funcionamento;
+- home.component.ts -> O componente principal, onde estao as configuracoes, template e css;
+Posso usar o arquivo css que eu quiser ou multiplos arquivos css;
+Notamos que gerou o selector que e o nome do componente quando for instanciado;
+Para usar esse componente nos usamos ele dentro de outro;
+- <router-outlet></router-outlet> -> A forma que o angular decide carregar os componentes a partir da rota selecionada;
+Se eu acessar /home ou /profile, cada rota acessa um componente diferente;
+Ao inves de dizer para carregar meu componente imediatamente o router outlet vai ser responsavel por carregar o componente a partir da rota;
+
+
+
+Nosso primeiro objetivo e dar fetch nos elementos do backend;
+Para fazer isso devemos criar algo chamado services;
+Essencialmente poderiamos fazer isso dentro de HomeComponent.ts mas queremos uma colecao de metodos compartilhados entre os componentes da aplicacao;
+
+        Services
+    -----------------
+    |               |
+ component       component
+
+O comportamento e compartilhado entao se a partir de um componente eu fazer uma modificacao, o outro vai refletir essa modificacao;

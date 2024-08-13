@@ -1,0 +1,8 @@
+// Queremos garantir que o wrapper ocupe o que esta alem do footer e header
+.wrapper {
+  height: auto; // Define a altura conforme o conteudo que ele possui;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  flex-grow: 1; // Se dentro de um container flex vai ocupar o espaco disponivel entre os seus irmaos
+}

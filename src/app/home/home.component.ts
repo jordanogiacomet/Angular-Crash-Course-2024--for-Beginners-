@@ -1,38 +1,47 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../services/products.service';
-import { Product, Products } from '../../types';
+import { PaginationParams, Product, Products } from '../../types';
 import { ProductComponent } from '../components/product/product.component';
 import { CommonModule } from '@angular/common';
+import { PaginatorModule } from 'primeng/paginator';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ProductComponent, CommonModule],
+  imports: [ProductComponent, CommonModule, PaginatorModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  products: Product[] = [];
+  private readonly productsUrl: string = 'http://localhost:3000/clothes';
+  totalRecords: number = 0;
+
   constructor(private productsService: ProductsService) {}
 
-  // No inicio do componente, vamos chamar o backend e pegar a lista de produtos;
-  // Se inscrevendo ao observable que o produto produz;
-  // No inicio do programa injetamos o servico que contem toda logica encapsulada de pegar a api;
-  // Produto service retorna um observable -> algo como uma promisse que eu posso me inscrever
-  // Quando eu faco o get eu preciso esperar para o server completar a requisicao, logo a forma que esperamos e observando esse request que acabamos de fazer;
-  // Eu estou dando o get e retornando um observable para voce, quando ele acabar ele vai retornar uma informacao para voce;
-  // Esse retorno sendo observavel eu posso me inscrever nele e por me inscrever nele eu posso mostrar as coisas;
-
-  products: Product[] = []
-
-  onProductsOutput(product: Product) {
+  onProductsOutput(product: Product): void {
     console.log(product);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadProducts(0, 5);
+  }
+
+  onPageChange(event: any): void {
+    this.loadProducts(event.page, event.rows);
+  }
+
+  private loadProducts(page: number, perPage: number): void {
     this.productsService
-      .getProducts('http://localhost:3000/clothes', { page: 0, perPage: 5 })
+      .getProducts(this.productsUrl, { page, perPage })
       .subscribe((products: Products) => {
-        this.products = products.items;
+        this.handleProductsResponse(products);
       });
+  }
+
+  private handleProductsResponse(products: Products): void {
+    this.products = products.items;
+    this.totalRecords = products.total;
   }
 }
